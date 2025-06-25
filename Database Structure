@@ -1,0 +1,153 @@
+Table PLAYER_STATS{
+  PlayerID smallint [primary key]
+  TeamID smallint [not null, ref: > TEAMS.TeamID]
+  PlayerName varchar
+  Weight smallint
+  Height float
+  Age smallint
+  Birthdate date
+  PrimaryRoleID smallint [not null, ref: > ROLES.RoleID]
+  Nationality varchar
+  TotalCaps smallint
+  6nCaps smallint
+  TotalTries smallint
+  6nTries smallint
+  TotalDrops smallint
+  6nDrops smallint
+  TotalPenalties smallint
+  6nPenalies smallint
+  TotalConversions smallint
+  6nConversions smallint
+  TotalYC smallint
+  6nYC smallint
+  TotalRC smallint
+  6nRC smallint
+  TotalMinPlayed smallint
+  6nMinPlayed smallint
+  TotalStarting smallint
+  6nStarting smallint
+  StatusID smallint [not null, ref: > STATUS.StatudID]
+  FirstInternational year
+  LastInternational year [default: 2025]
+}
+
+Table PLAYER_MATCH_STATS{
+  PlayerID smallint [not null, ref: > PLAYER_STATS.PlayerID]
+  TeamID smallint [not null, ref: > TEAMS.TeamID]
+  MatchID smallint [not null, ref: > FIXTURES_CALENDAR.MatchID]
+  RoleID smallint [not null, ref: > ROLES.RoleID]
+  Tries smallint
+  TryAssists smallint
+  Conversions smallint
+  PenaltyGoals smallint
+  DropGoals smallint
+  Points smallint
+  Passes smallint
+  MetersRun smallint
+  CleanBreaks smallint
+  DefendersBeaten smallint
+  Offloads smallint
+  TurnoversConceded smallint
+  Tackles smallint
+  MissedTackles smallint
+  Lineouts smallint
+  PenaltiesConceded smallint
+  YellowCards smallint
+  RedCards smallint
+  OpposingTeamID smallint
+}
+
+Table TEAM_MATCH_STATS{
+  TeamID smallint [not null, ref: > TEAMS.TeamID]
+  MatchID smallint [not null, ref: > FIXTURES_CALENDAR.MatchID]
+  HomeAway bool
+  TotalPointsGained smallint
+  FinalScore smallint
+  Tries smallint
+  PenaltyTries smallint
+  Conversions smallint
+  PenaltyKick smallint
+  DropGoal smallint
+  KickSuccess decimal(5,2)
+  MetersRun smallint
+  KicksFromHand smallint
+  Passes smallint
+  Runs smallint
+  Possession1H decimal(5,2)
+  Possession2H decimal(5,2)
+  Territory1H decimal(5,2)
+  Territory2H decimal(5,2)
+  CleanBreaks smallint
+  DefendersBeaten smallint
+  Offloads smallint
+  TotalRucks smallint
+  RucksWon smallint
+  TotalMauls smallint
+  MaulsWon smallint
+  TurnoverConceded smallint
+  TotalScrums smallint
+  ScrumsWon smallint
+  PackWeight smallint
+  TotalLineouts smallint
+  LineoutsWon smallint
+  TacklesMade smallint
+  TakclesSuccess smallint
+  PenaltiesConceded smallint
+  RedCard smallint
+  YellowCard smallint
+  FreeKicksConceded smallint
+}
+
+Table TEAM_YEAR_STATS{
+  TeamID smallint [not null, ref: > TEAMS.TeamID]
+  TournamentYear year
+  TotalPoints smallint
+  Tries smallint
+  TryAssists smallint
+  SuccessfulPenaltyKicks smallint
+  SuccessfulConversions smallint
+  GoalKicking decimal(5,2)
+  Attacking22M smallint
+  PointsPer22M float
+  Carries smallint
+  MetersCarried float
+  TotalPasses smallint
+  Offloads smallint
+  Linebreaks smallint
+  KicksInPlay smallint
+  SuccessfulTackles decimal(5,2)
+  TacklesMade smallint
+  TacklesMissed smallint
+  AttackingRuckArrivals smallint
+  DefensiveRuckArrivals smallint
+  BreakdownSteals smallint
+  LineoutTakes smallint
+  LineoutSteals smallint
+  LineoutWon smallint
+  SuccessfulScrum decimal(5,2)
+}
+
+Table FIXTURES_CALENDAR{
+  MatchID smallint [primary key]
+  MatchDate date [not null]
+  HomeTeamID smallint [not null, ref: > TEAMS.TeamID]
+  AwayTeamID smallint [not null, ref: > TEAMS.TeamID]
+  HomeScore smallint
+  AwayScore smallint
+}
+
+Table STATUS {
+  StatudID smallint [primary key]
+  StatusValue varchar [not null, unique]
+}
+
+Table TEAMS{
+  TeamID smallint [primary key]
+  TeamValue varchar [not null, unique]
+}
+
+Table ROLES{
+  RoleID smallint [primary key]
+  RoleNumber smallint [not null, unique]
+  RoleValue varchar [not null]
+}
